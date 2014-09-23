@@ -9,9 +9,20 @@ namespace SalesRegisterTests
     internal class RegisterTests : TestBase
     {
         [Test]
-        public void GetItemPrice_ShouldGetPrice()
+        public void GetItemPrice_ShouldGetPriceFor12345()
         {
             const string barcode = "12345";
+            var expectedPrice = RegisterDataProvider.GetItemPrice(barcode);
+
+            IRegister register = new Register();
+            var price = register.GetItemPrice(barcode);
+            Assert.AreEqual(price, expectedPrice);
+        }
+
+        [Test]
+        public void GetItemPrice_ShouldGetPriceFor23456()
+        {
+            const string barcode = "23456";
             var expectedPrice = RegisterDataProvider.GetItemPrice(barcode);
 
             IRegister register = new Register();

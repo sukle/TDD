@@ -19,6 +19,7 @@ namespace SalesRegister
         private void PopulatePrices()
         {
             Prices.Add("12345", 24.50);
+            Prices.Add("23456", 39);
         }
     }
 }

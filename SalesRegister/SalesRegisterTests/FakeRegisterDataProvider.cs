@@ -21,7 +21,8 @@ namespace SalesRegisterTests
             prices = new Dictionary<string, string>
             {
                 {"12345", (24.50).ToString("C")},
-                {"", "Scanning error: empty barcode"}
+                {"", "Scanning error: empty barcode"},
+                {"23456", (39).ToString("C")},
             };
         }
 
