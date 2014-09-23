@@ -2,26 +2,34 @@
 
 namespace SalesRegister
 {
-    public class Sales :  SalesBase, ISales
+    public class Sales :  ISales
     {
-        public string GetItemPrice(string barcode)
+        private readonly ICatalog catalog;
+        private readonly IDisplay display;
+        
+        public Sales(ICatalog catalog, IDisplay display)
         {
-            string result;
-            
-            if (string.IsNullOrEmpty(barcode))
-            {
-                result = EMPTY_BARCODE;
-            } 
-            else if (Prices.ContainsKey(barcode))
-            {
-                result = Prices[barcode].ToString("C");
-            }
-            else
-            {
-                result = string.Format(PRICE_NOT_FOUND, barcode);
-            }
+            this.catalog = catalog;
+            this.display = display;
+        }
 
-            return result;
+        public void GetItemPrice(string barcode)
+        {
+            if (barcode.Equals(string.Empty))
+            {
+                display.SetEmptyBarcodeMessage();
+                return;
+            }
+            
+            var price = catalog.FindPrice(barcode);
+            if (price == null) 
+            {
+                display.SetProductNotFoundMessage(barcode);
+            } 
+            else 
+            {
+                display.SetPrice(price);
+            }
         }
     }
 }

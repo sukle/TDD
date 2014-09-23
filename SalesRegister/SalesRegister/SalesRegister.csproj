@@ -44,10 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Catalog.cs" />
+    <Compile Include="Display.cs" />
+    <Compile Include="ICatalog.cs" />
+    <Compile Include="IDisplay.cs" />
     <Compile Include="Sales.cs" />
     <Compile Include="ISales.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SalesBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
