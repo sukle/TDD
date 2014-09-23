@@ -4,11 +4,11 @@ namespace SalesRegisterTests
 {
     internal abstract class TestBase
     {
-        public FakeRegisterDataProvider RegisterDataProvider { get; private set; }
+        public FakeSalesDataProvider SalesDataProvider { get; private set; }
 
         protected TestBase()
         {
-            RegisterDataProvider = new FakeRegisterDataProvider();
+            SalesDataProvider = new FakeSalesDataProvider();
         }
     }
 }

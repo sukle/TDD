@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeRegisterDataProvider.cs" />
-    <Compile Include="RegisterTests.cs" />
+    <Compile Include="FakeSalesDataProvider.cs" />
+    <Compile Include="SalesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
   </ItemGroup>

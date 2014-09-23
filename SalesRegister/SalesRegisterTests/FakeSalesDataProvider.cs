@@ -5,13 +5,13 @@ using SalesRegister;
 
 namespace SalesRegisterTests
 {
-    internal class FakeRegisterDataProvider : IRegister
+    internal class FakeSalesDataProvider : ISales
     {
         private const string PRICE_NOT_FOUND = "Price not found for {0}";
 
         private Dictionary<string, string> prices;
 
-        public FakeRegisterDataProvider()
+        public FakeSalesDataProvider()
         {
             PopulatePrices();
         }
