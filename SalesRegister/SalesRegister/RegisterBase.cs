@@ -5,6 +5,9 @@ namespace SalesRegister
 {
     public abstract class RegisterBase
     {
+        protected const string PRICE_NOT_FOUND = "Price not found for {0}";
+        protected const string EMPTY_BARCODE = "Scanning error: empty barcode";
+        
         protected Dictionary<string, double> Prices { get; private set; }
 
         protected RegisterBase()

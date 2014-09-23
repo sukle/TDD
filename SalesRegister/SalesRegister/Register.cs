@@ -4,9 +4,6 @@ namespace SalesRegister
 {
     public class Register :  RegisterBase, IRegister
     {
-        private const string PRICE_NOT_FOUND = "Price not found for {0}";
-        private const string EMPTY_BARCODE = "Scanner error: empty barcode";
-
         public string GetItemPrice(string barcode)
         {
             string result;
