@@ -2,7 +2,7 @@
 
 namespace SalesRegister
 {
-    public interface IScanner
+    public interface IRegister
     {
         string GetItemPrice(string barcode);
     }

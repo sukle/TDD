@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace SalesRegister
 {
-    public abstract class ScannerBase
+    public abstract class RegisterBase
     {
         protected Dictionary<string, double> Prices { get; private set; }
 
-        protected ScannerBase()
+        protected RegisterBase()
         {
             Prices = new Dictionary<string, double>();
             PopulatePrices();
