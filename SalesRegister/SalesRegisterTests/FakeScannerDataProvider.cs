@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+
+using SalesRegister;
+
+namespace SalesRegisterTests
+{
+    internal class FakeScannerDataProvider : IScanner
+    {
+        private const string PRICE_NOT_FOUND = "Price not found for {0}";
+
+        private Dictionary<string, string> prices;
+
+        public FakeScannerDataProvider()
+        {
+            PopulatePrices();
+        }
+
+        private void PopulatePrices()
+        {
+            prices = new Dictionary<string, string>
+            {
+                {"12345", (24.50).ToString("C")},
+                {"", "Scanner error: empty barcode"}
+            };
+        }
+
+        public string GetItemPrice(string barcode)
+        {
+            return prices.ContainsKey(barcode) ? prices[barcode] : string.Format(PRICE_NOT_FOUND, barcode);
+        }
+    }
+}
