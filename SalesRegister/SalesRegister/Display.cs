@@ -6,7 +6,7 @@ namespace SalesRegister
     {
         private string text;
         
-        public string DisplayText()
+        public string GetDisplayText()
         {
             return text;
         }
@@ -24,6 +24,11 @@ namespace SalesRegister
         public void SetProductNotFoundMessage(string barcode)
         {
             text = "Product not found for " + barcode;
+        }
+
+        public void ClearDisplayText()
+        {
+            text = string.Empty;
         }
     }
 }

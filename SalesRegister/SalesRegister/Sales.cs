@@ -13,7 +13,7 @@ namespace SalesRegister
             this.display = display;
         }
 
-        public void GetItemPrice(string barcode)
+        public void RunBarcode(string barcode)
         {
             if (barcode.Equals(string.Empty))
             {
@@ -30,6 +30,17 @@ namespace SalesRegister
             {
                 display.SetPrice(price);
             }
+        }
+
+        public void StartTransaction()
+        {
+           display.ClearDisplayText();
+        }
+
+        public void EndTransaction()
+        {
+            //TODO: store total amount
+            display.GetDisplayText();
         }
     }
 }

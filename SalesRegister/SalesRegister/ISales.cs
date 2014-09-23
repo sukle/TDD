@@ -4,6 +4,8 @@ namespace SalesRegister
 {
     public interface ISales
     {
-        void GetItemPrice(string barcode);
+        void StartTransaction();
+        void RunBarcode(string barcode);
+        void EndTransaction();
     }
 }

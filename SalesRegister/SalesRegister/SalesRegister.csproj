@@ -46,6 +46,9 @@
   <ItemGroup>
     <Compile Include="Catalog.cs" />
     <Compile Include="Display.cs" />
+    <Compile Include="DomainObjects\CartItem.cs" />
+    <Compile Include="DomainObjects\Product.cs" />
+    <Compile Include="ICart.cs" />
     <Compile Include="ICatalog.cs" />
     <Compile Include="IDisplay.cs" />
     <Compile Include="Sales.cs" />
