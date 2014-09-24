@@ -3,16 +3,11 @@ using System.Collections.Generic;
 
 namespace SalesRegister
 {
-    public interface ICatalog
-    {
-        decimal? GetPrice(string barcode);
-    }
-
-    public class Catalog : ICatalog
+    public class InMemoryCatalog : ICatalog
     {
         private readonly Dictionary<string, decimal?> pricesByBarcode;
 
-        public Catalog(Dictionary<string, decimal?> pricesByBarcode)
+        public InMemoryCatalog(Dictionary<string, decimal?> pricesByBarcode)
         {
             this.pricesByBarcode = pricesByBarcode;
         }
