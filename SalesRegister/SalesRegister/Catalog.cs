@@ -5,14 +5,14 @@ namespace SalesRegister
 {
     public class Catalog : ICatalog
     {
-        private readonly Dictionary<string, string> pricesByBarcode;
+        private readonly Dictionary<string, decimal?> pricesByBarcode;
 
-        public Catalog(Dictionary<string, string> pricesByBarcode)
+        public Catalog(Dictionary<string, decimal?> pricesByBarcode)
         {
             this.pricesByBarcode = pricesByBarcode;
         }
 
-        public string FindPrice(string barcode)
+        public decimal? GetPrice(string barcode)
         {
             return pricesByBarcode.ContainsKey(barcode)
                 ? pricesByBarcode[barcode]

@@ -4,6 +4,6 @@ namespace SalesRegister
 {
     public interface ICatalog
     {
-        string FindPrice(string barcode);
+        decimal? GetPrice(string barcode);
     }
 }

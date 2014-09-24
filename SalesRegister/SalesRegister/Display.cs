@@ -11,9 +11,9 @@ namespace SalesRegister
             return text;
         }
 
-        public void SetPrice(string price)
+        public void SetPrice(decimal price)
         {
-            text = price;
+            text = price.ToString("C");
         }
 
         public void SetEmptyBarcodeMessage()

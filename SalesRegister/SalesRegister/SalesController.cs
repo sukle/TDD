@@ -2,12 +2,12 @@
 
 namespace SalesRegister
 {
-    public class Sales :  ISales
+    public class SalesController :  ISalesController
     {
         private readonly ICatalog catalog;
         private readonly IDisplay display;
         
-        public Sales(ICatalog catalog, IDisplay display)
+        public SalesController(ICatalog catalog, IDisplay display)
         {
             this.catalog = catalog;
             this.display = display;
@@ -21,14 +21,14 @@ namespace SalesRegister
                 return;
             }
             
-            var price = catalog.FindPrice(barcode);
+            var price = catalog.GetPrice(barcode);
             if (price == null) 
             {
                 display.SetProductNotFoundMessage(barcode);
             } 
             else 
             {
-                display.SetPrice(price);
+                display.SetPrice(price.Value);
             }
         }
 

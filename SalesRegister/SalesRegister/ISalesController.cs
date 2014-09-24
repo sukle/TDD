@@ -2,7 +2,7 @@
 
 namespace SalesRegister
 {
-    public interface ISales
+    public interface ISalesController
     {
         void StartTransaction();
         void RunBarcode(string barcode);

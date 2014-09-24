@@ -51,8 +51,8 @@
     <Compile Include="ICart.cs" />
     <Compile Include="ICatalog.cs" />
     <Compile Include="IDisplay.cs" />
-    <Compile Include="Sales.cs" />
-    <Compile Include="ISales.cs" />
+    <Compile Include="SalesController.cs" />
+    <Compile Include="ISalesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
