@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using Moq;
 using NUnit.Framework;
 using SalesRegister;
@@ -13,19 +13,25 @@ namespace SalesRegisterTests
         public void GetItemPrice_ShouldFindProduct()
         {
             const decimal price = 24.50m;
+            const string barcode = "12345";
 
             var display = new Mock<IDisplay>();
             display.Setup(m => m.SetPrice(It.Is<decimal>(p => p == price)))
                 .Callback(() => display.Setup(m => m.DisplayText).Returns(price.ToString("C")));
 
             var catalog = new Mock<ICatalog>();
-            catalog.Setup(c => c.GetPrice(It.Is<string>(s => s.Equals("12345"))))
+            catalog.Setup(c => c.GetPrice(It.Is<string>(s => s.Equals(barcode))))
                 .Returns(price);
-            
-            ISalesController salesController = new SalesController(catalog.Object, display.Object);
-            salesController.RunBarcode("12345");
 
-            Assert.AreEqual("24.50 Lt", display.Object.DisplayText);
+            var scanner = new Mock<IScanner>();
+            
+            new SalesController(catalog.Object, display.Object, scanner.Object);
+            
+            scanner.Raise(s => s.BarcodeScanned += null, new BarcodeScannedEventArgs{Barcode = barcode});
+            
+            Assert.AreEqual(price.ToString("C"), display.Object.DisplayText);
+
+            Console.WriteLine(display.Object.DisplayText);
         }
 
         [Test]
@@ -40,11 +46,15 @@ namespace SalesRegisterTests
             var catalog = new Mock<ICatalog>();
             catalog.Setup(m => m.GetPrice(barcode)).Returns((decimal?)null);
 
-            ISalesController salesController = new SalesController(catalog.Object, display.Object);
+            var scanner = new Mock<IScanner>();
 
-            salesController.RunBarcode(barcode);
+            new SalesController(catalog.Object, display.Object, scanner.Object);
 
+            scanner.Raise(s => s.BarcodeScanned += null, new BarcodeScannedEventArgs { Barcode = barcode });
+            
             Assert.AreEqual("Product not found for " + barcode, display.Object.DisplayText);
+
+            Console.WriteLine(display.Object.DisplayText);
         }
 
         [Test]
@@ -55,12 +65,15 @@ namespace SalesRegisterTests
                 .Callback(() => display.SetupGet(m => m.DisplayText).Returns("Scanning error: empty barcode"));
             
             var catalog = new Mock<ICatalog>();
+            var scanner = new Mock<IScanner>();
             
-            ISalesController salesController = new SalesController(catalog.Object, display.Object);
+            new SalesController(catalog.Object, display.Object, scanner.Object);
 
-            salesController.RunBarcode("");
+            scanner.Raise(s => s.BarcodeScanned += null, new BarcodeScannedEventArgs { Barcode = string.Empty });
 
             Assert.AreEqual("Scanning error: empty barcode", display.Object.DisplayText);
+
+            Console.WriteLine(display.Object.DisplayText);
         }
     }
 }
