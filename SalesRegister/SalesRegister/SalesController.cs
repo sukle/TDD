@@ -2,6 +2,11 @@
 
 namespace SalesRegister
 {
+    public interface ISalesController
+    {
+        void RunBarcode(string barcode);
+    }
+
     public class SalesController :  ISalesController
     {
         private readonly ICatalog catalog;
@@ -30,17 +35,6 @@ namespace SalesRegister
             {
                 display.SetPrice(price.Value);
             }
-        }
-
-        public void StartTransaction()
-        {
-           display.ClearDisplayText();
-        }
-
-        public void EndTransaction()
-        {
-            //TODO: store total amount
-            display.GetDisplayText();
         }
     }
 }

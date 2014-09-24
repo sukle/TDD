@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace SalesRegister
 {
+    public interface ICatalog
+    {
+        decimal? GetPrice(string barcode);
+    }
+
     public class Catalog : ICatalog
     {
         private readonly Dictionary<string, decimal?> pricesByBarcode;
