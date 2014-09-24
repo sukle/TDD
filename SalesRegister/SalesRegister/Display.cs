@@ -4,40 +4,34 @@ namespace SalesRegister
 {
     public interface IDisplay
     {
-        string GetDisplayText();
+        string DisplayText { get; }
         void SetPrice(decimal price);
         void SetEmptyBarcodeMessage();
         void SetProductNotFoundMessage(string barcode);
-        void ClearDisplayText();
     }
 
     public class Display : IDisplay
     {
-        private string text;
-        
-        public string GetDisplayText()
-        {
-            return text;
-        }
+        public string DisplayText { get; private set; }
 
         public void SetPrice(decimal price)
         {
-            text = price.ToString("C");
+            DisplayText = price.ToString("C");
         }
 
         public void SetEmptyBarcodeMessage()
         {
-            text = "Scanning error: empty barcode";
+            DisplayText = "Scanning error: empty barcode";
         }
 
         public void SetProductNotFoundMessage(string barcode)
         {
-            text = "Product not found for " + barcode;
+            DisplayText = "Product not found for " + barcode;
         }
 
         public void ClearDisplayText()
         {
-            text = string.Empty;
+            DisplayText = string.Empty;
         }
     }
 }

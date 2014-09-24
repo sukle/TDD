@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Moq;
 using NUnit.Framework;
 using SalesRegister;
 
@@ -11,44 +12,55 @@ namespace SalesRegisterTests
         [Test]
         public void GetItemPrice_ShouldFindProduct()
         {
-            IDisplay display = new Display();
-            ICatalog catalog = new Catalog(new Dictionary<string, decimal?>
-            {
-                {"12345", 24.50m}
-            });
-            ISalesController salesController = new SalesController(catalog, display);
+            const decimal price = 24.50m;
 
+            var display = new Mock<IDisplay>();
+            display.Setup(m => m.SetPrice(It.Is<decimal>(p => p == price)))
+                .Callback(() => display.Setup(m => m.DisplayText).Returns(price.ToString("C")));
+
+            var catalog = new Mock<ICatalog>();
+            catalog.Setup(c => c.GetPrice(It.Is<string>(s => s.Equals("12345"))))
+                .Returns(price);
+            
+            ISalesController salesController = new SalesController(catalog.Object, display.Object);
             salesController.RunBarcode("12345");
 
-            Assert.AreEqual("24.50 Lt", display.GetDisplayText());
+            Assert.AreEqual("24.50 Lt", display.Object.DisplayText);
         }
 
         [Test]
         public void GetItemPrice_ShouldNotFindProduct()
         {
-            IDisplay display = new Display();
-            ICatalog catalog = new Catalog(new Dictionary<string, decimal?>
-            {
-                {"anything except 99999", null}
-            });
-            ISalesController salesController = new SalesController(catalog, display);
+            const string barcode = "99999";
 
-            salesController.RunBarcode("99999");
+            var display = new Mock<IDisplay>();
+            display.Setup(m => m.SetProductNotFoundMessage(It.Is<string>(s => s == barcode)))
+                .Callback(() => display.SetupGet(m => m.DisplayText).Returns("Product not found for " + barcode));
 
-            Assert.AreEqual("Product not found for 99999", display.GetDisplayText());
+            var catalog = new Mock<ICatalog>();
+            catalog.Setup(m => m.GetPrice(barcode)).Returns((decimal?)null);
+
+            ISalesController salesController = new SalesController(catalog.Object, display.Object);
+
+            salesController.RunBarcode(barcode);
+
+            Assert.AreEqual("Product not found for " + barcode, display.Object.DisplayText);
         }
 
         [Test]
         public void GetItemPrice_ShouldReturnEmptyBarcodeMessage()
         {
-
-            IDisplay display = new Display();
-            ICatalog catalog = new Catalog(null);
-            ISalesController salesController = new SalesController(catalog, display);
+            var display = new Mock<IDisplay>();
+            display.Setup(m => m.SetEmptyBarcodeMessage())
+                .Callback(() => display.SetupGet(m => m.DisplayText).Returns("Scanning error: empty barcode"));
+            
+            var catalog = new Mock<ICatalog>();
+            
+            ISalesController salesController = new SalesController(catalog.Object, display.Object);
 
             salesController.RunBarcode("");
 
-            Assert.AreEqual("Scanning error: empty barcode", display.GetDisplayText());
+            Assert.AreEqual("Scanning error: empty barcode", display.Object.DisplayText);
         }
     }
 }
